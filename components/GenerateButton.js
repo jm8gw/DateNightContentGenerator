@@ -6,14 +6,18 @@ import { fetchRandomFact } from '../api/facts';
 import { fetchRandomJoke } from '../api/jokes';
 import { fetchRandomQuote } from '../api/quotes';
 
-const GenerateButton = ({ setContentData, contentType }) => {
+const GenerateButton = ({ setContentData, contentType, blankSlate, setBlankSlate }) => {
 
     const getFact = async () => {
         try {
+            setBlankSlate(false);
+            //console.log(blankSlate, " should be false!");
             const factData = await fetchRandomFact();
             // Handle the factData, e.g., update state or display the fact on the screen
             console.log(factData);
             setContentData(factData[0].fact + '.');
+            setBlankSlate(true);
+            //console.log(blankSlate);
         } catch (error) {
             // Handle errors, such as network issues or API errors
             console.error('Error:', error);
@@ -22,10 +26,12 @@ const GenerateButton = ({ setContentData, contentType }) => {
     
     const getJoke = async () => {
         try {
+            setBlankSlate(false);
             const jokeData = await fetchRandomJoke();
             // Handle the factData, e.g., update state or display the fact on the screen
             console.log(jokeData);
-            setContentData(jokeData[0].joke);
+            setContentData(jokeData[0].joke.split(/(?<=[!?])\s+/).join('\n\n\n'));
+            setBlankSlate(true);
         } catch (error) {
             // Handle errors, such as network issues or API errors
             console.error('Error:', error);
@@ -33,10 +39,12 @@ const GenerateButton = ({ setContentData, contentType }) => {
         };
     const getQuote = async () => {
         try {
+            setBlankSlate(false);
             const quoteData = await fetchRandomQuote();
             // Handle the factData, e.g., update state or display the fact on the screen
             console.log(quoteData);
-            setContentData('"' + quoteData[0].quote + '"');
+            setContentData('"' + quoteData[0].quote + '"' + '\n\n' + '- ' + quoteData[0].author);
+            setBlankSlate(true);
         } catch (error) {
             // Handle errors, such as network issues or API errors
             console.error('Error:', error);
