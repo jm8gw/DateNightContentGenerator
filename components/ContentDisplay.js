@@ -1,10 +1,10 @@
 import { View, Text, Image } from 'react-native'
 import { Card, ListItem, Button, Icon } from 'react-native-elements'
 
-const ContentDisplay = () => {
+const ContentDisplay = ({ content }) => {
     return (
         <Card>
-            <Card.Title>Content goes here</Card.Title>
+            <Card.Title>{content}</Card.Title>
         </Card>
     );
   };
